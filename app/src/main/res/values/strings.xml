@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Street Issues</string>
+    <string name="issues_list">قائمه المشاكل</string>
+    <string name="issues_on_map">الخارطة</string>
+
+    <string name="file_issue">أبلغ عن مشكلة</string>
+    <string name="title">العنوان</string>
+    <string name="description">التفاصيل</string>
+    <string name="date_sample">5 مايو 2019</string>
+    <string name="choose_photo">اختر صورة</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_issue">اضافة رحلة جديدة</string>
+    <string name="photo_selection_error">Error accured, can,t select photo</string>
+    <string name="uploading_photo">Uploading photo</string>
+    <string name="add_issue_success">تم اضافة الرحلة</string>
+    <string name="add_issue_failed">فشل في اضافة الرحلة</string>
+    <string name="uploading_task_failed">Uploading Task Failed</string>
+    <string name="error_msg_title">title can\'t be empty</string>
+    <string name="error_msg_desc">description can\'t be empty</string>
+</resources>
