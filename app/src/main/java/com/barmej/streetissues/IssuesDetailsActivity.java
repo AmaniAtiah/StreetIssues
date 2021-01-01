@@ -38,7 +38,6 @@ public class IssuesDetailsActivity extends AppCompatActivity {
             }
 
         }
-
-
     }
+
 }

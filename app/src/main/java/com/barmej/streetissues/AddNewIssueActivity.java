@@ -45,7 +45,6 @@ import com.google.firebase.storage.UploadTask;
 import java.util.UUID;
 
 public class AddNewIssueActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static final String TAG = AddNewIssueActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
     private static final int PERMISSION_REQUEST_READ_STORAGE = 2;
     private static final int REQUEST_GET_PHOTO = 3;
@@ -271,6 +270,5 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_photo)), REQUEST_GET_PHOTO);
-
     }
 }

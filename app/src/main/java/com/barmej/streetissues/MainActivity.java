@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton mAddIssuesBtn;
     private BottomNavigationView bottomNavigationView;
-    private FrameLayout parentFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAddIssuesBtn = findViewById(R.id.button_add_new_issues);
         bottomNavigationView = findViewById(R.id.navigation_bottom);
-        parentFrameLayout = findViewById(R.id.content);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNav);
         getSupportFragmentManager().beginTransaction().replace(R.id.content, new IssuesListFragment()).commit();
@@ -44,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNav = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNav =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
