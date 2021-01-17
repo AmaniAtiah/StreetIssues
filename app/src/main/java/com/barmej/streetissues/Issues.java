@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
+import java.util.Date;
+
 public class Issues implements Parcelable {
     private String title;
     private String description;
@@ -26,6 +29,10 @@ public class Issues implements Parcelable {
         title = in.readString();
         description = in.readString();
         photo = in.readString();
+        double lat = in.readDouble();
+        double lng = in.readDouble();
+        location = new GeoPoint(lat, lng);
+
     }
 
     public static final Creator<Issues> CREATOR = new Creator<Issues>() {
@@ -82,5 +89,8 @@ public class Issues implements Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(photo);
+        dest.writeDouble(location.getLatitude());
+        dest.writeDouble(location.getLongitude());
+
     }
 }

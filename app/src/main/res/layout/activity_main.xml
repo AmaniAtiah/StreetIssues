@@ -29,10 +29,10 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager_home"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_new_issues"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_bottom"
         app:layout_constraintEnd_toEndOf="@+id/content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -43,11 +43,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/navigation_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/colorPrimary" />
+        app:tint="@color/colorAccent" />
 
 
     <FrameLayout

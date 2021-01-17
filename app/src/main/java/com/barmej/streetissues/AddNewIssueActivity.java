@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,7 +65,7 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
     private EditText mIssueDescEditText;
     private Button mAddIssuebtn;
     private Toolbar toolbar;
-    private ProgressDialog mDailog;
+    private ProgressDialog mDialog;
 
 
     @Override
@@ -103,8 +104,10 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
                     mIssueTitleEditText.setError(getString(R.string.error_msg_title));
                 } else if (TextUtils.isEmpty(mIssueDescEditText.getText())) {
                     mIssueDescEditText.setError(getString(R.string.error_msg_desc));
-                } else if (mIssuePhotoUri != null) {
+                } else if (mIssuePhotoUri != null && mSelectedLatLng != null) {
                     addIssueToFirebase();
+                }else {
+                    Toast.makeText(AddNewIssueActivity.this,R.string.add_photo_and_location,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -118,15 +121,15 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
         if (mLocationPermissionGranted) {
             requestDeviceCurrentLocation();
         }
-        mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mSelectedLatLng = latLng;
-                mGoogleMap.clear();
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(mSelectedLatLng);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                mGoogleMap.addMarker(markerOptions);
+                    mSelectedLatLng = latLng;
+                    mGoogleMap.clear();
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(mSelectedLatLng);
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    mGoogleMap.addMarker(markerOptions);
             }
         });
     }
@@ -136,11 +139,11 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
         StorageReference storageReference = firebaseStorage.getReference();
         final StorageReference photoStorageReference = storageReference.child(UUID.randomUUID().toString());
         firebaseFirestore = FirebaseFirestore.getInstance();
-        mDailog = new ProgressDialog(this);
-        mDailog.setIndeterminate(true);
-        mDailog.setTitle(R.string.app_name);
-        mDailog.setMessage(getString(R.string.uploading_photo));
-        mDailog.show();
+        mDialog = new ProgressDialog(this);
+        mDialog.setIndeterminate(true);
+        mDialog.setTitle(R.string.app_name);
+        mDialog.setMessage(getString(R.string.uploading_photo));
+        mDialog.show();
         photoStorageReference.putFile(mIssuePhotoUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -162,26 +165,26 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
                                                 @Override
                                                 public void onDismissed(Snackbar transientBottomBar,int event) {
                                                     super.onDismissed(transientBottomBar,event);
-                                                    mDailog.dismiss();
+                                                    mDialog.dismiss();
                                                     finish();
                                                 }
                                             }).show();
                                         } else {
                                             Snackbar.make(mConstraintLayout, R.string.add_issue_failed, Snackbar.LENGTH_LONG).show();
-                                            mDailog.dismiss();
+                                            mDialog.dismiss();
                                         }
                                     }
                                 });
                             } else {
                                 Snackbar.make(mConstraintLayout, R.string.uploading_task_failed, Snackbar.LENGTH_LONG).show();
-                                mDailog.dismiss();
+                                mDialog.dismiss();
 
                             }
                         }
                     });
                 } else {
                     Snackbar.make(mConstraintLayout, R.string.uploading_task_failed, Snackbar.LENGTH_LONG).show();
-                    mDailog.dismiss();
+                    mDialog.dismiss();
                 }
             }
         });
@@ -191,7 +194,6 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
         mLocationPermissionGranted = false;
         if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
-
         } else {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_LOCATION);
         }
@@ -225,7 +227,6 @@ public class AddNewIssueActivity extends AppCompatActivity implements OnMapReady
             }
         });
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions,@NonNull int[] grantResults) {
